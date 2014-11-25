@@ -9,3 +9,12 @@ table, th, td{
 td{
 	text-align: center;
 }
+.splittable{
+	background-color: black;
+	color: white;
+	border-collapse: collapse;
+}
+
+.splittable th, .splittable td{
+	border: 1px solid white;
+}

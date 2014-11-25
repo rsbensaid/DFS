@@ -1,7 +1,7 @@
 <div ng-controller='Today'>
 	<h2>Today's Cheatsheet</h2>
 	<div>
-		<table>
+		<!-- <table>
 			<tr>
 				<th>Group</th>
 				<th>Split</th>
@@ -14,7 +14,7 @@
 				<td>{{split.fppg}}</td>
 				<td>{{split.mpg}}</td>
 			</tr>
-		</table>
+		</table> -->
 	</div>
 	<input type = 'text' placeholder = 'Search Players' ng-model='search_table'>
 	<input type = 'text' placeholder = 'Price max...' ng-model='price_max'>
@@ -36,7 +36,7 @@
 			<th ng-click='changeSorting("games")'>Games Played</th>
 		</tr>
 		<tr ng-repeat='player in players | filter: {name: search_table} | filter: isLessThan | filter: {pos: pos_search} | orderBy:sort.column:sort.descending'>
-				<td ng-click = 'show_player(player.name)' popover-trigger = 'mouseenter' popover='<div ng-repeat="split in splits"> GROUP: {{split.group}} SPLIT: {{split.split}} FPPG: {{split.fppg}} MPG: {{split.mpg}}>{{player.name}}</div>' popover-placement='right'>{{player.name}}
+				<td ng-mouseenter = 'show_player(player.name)' pop-over>{{player.name}}
 				</td>
 				<td>{{player.pos}}</td>
 				<td>${{player.price}}</td>
@@ -52,4 +52,20 @@
 				<td>{{player.games}}</td>
 			</tr>
 	</table>
+	<script type="text/ng-template" id = 'popover_template.html'>
+	<table class='splittable'>
+		<tr>
+			<th>Group</td>
+			<th>Split</td>
+			<th>FPPG</td>
+			<th>MPG</td>
+		</tr>
+		<tr ng-repeat='split in splits'>
+			<td>{{split.group}}</td>
+			<td>{{split.split}}</td>
+			<td>{{split.fppg}}</td>
+			<td>{{split.mpg}}</td>
+		</tr>
+	</table>
+	</script>
 </div>
