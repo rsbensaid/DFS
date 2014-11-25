@@ -1,0 +1,72 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'accordion' ]
+2 info using npm@1.4.23
+3 info using node@v0.10.31
+4 verbose readDependencies using package.json deps
+5 verbose cache add [ 'accordion', null ]
+6 verbose cache add name=undefined spec="accordion" args=["accordion",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'accordion',
+7 verbose parsed url   path: 'accordion',
+7 verbose parsed url   href: 'accordion' }
+8 silly lockFile d1391a0e-accordion accordion
+9 verbose lock accordion /Users/rsb259/.npm/d1391a0e-accordion.lock
+10 silly lockFile d1391a0e-accordion accordion
+11 silly lockFile d1391a0e-accordion accordion
+12 verbose addNamed [ 'accordion', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile c1ef852e-accordion accordion@
+15 verbose lock accordion@ /Users/rsb259/.npm/c1ef852e-accordion.lock
+16 silly addNameRange { name: 'accordion', range: '*', hasData: false }
+17 verbose request where is /accordion
+18 verbose request registry https://registry.npmjs.org/
+19 verbose request id fdfa9ef8c390bd22
+20 verbose url raw /accordion
+21 verbose url resolving [ 'https://registry.npmjs.org/', './accordion' ]
+22 verbose url resolved https://registry.npmjs.org/accordion
+23 verbose request where is https://registry.npmjs.org/accordion
+24 info trying registry request attempt 1 at 15:57:25
+25 http GET https://registry.npmjs.org/accordion
+26 http 200 https://registry.npmjs.org/accordion
+27 silly registry.get cb [ 200,
+27 silly registry.get   { date: 'Sat, 22 Nov 2014 23:57:26 GMT',
+27 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+27 silly registry.get     etag: '"CSGZKU99W4THL6O5ZA56TZ0LY"',
+27 silly registry.get     'content-type': 'application/json',
+27 silly registry.get     'cache-control': 'max-age=60',
+27 silly registry.get     'content-length': '311',
+27 silly registry.get     'accept-ranges': 'bytes',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     age: '0',
+27 silly registry.get     'x-served-by': 'cache-sjc3134-SJC',
+27 silly registry.get     'x-cache': 'MISS',
+27 silly registry.get     'x-cache-hits': '0',
+27 silly registry.get     'x-timer': 'S1416700646.732132,VS0,VE145',
+27 silly registry.get     vary: 'Accept',
+27 silly registry.get     'keep-alive': 'timeout=10, max=50',
+27 silly registry.get     connection: 'Keep-Alive' } ]
+28 silly addNameRange number 2 { name: 'accordion', range: '*', hasData: true }
+29 silly addNameRange versions [ 'accordion', [] ]
+30 silly lockFile c1ef852e-accordion accordion@
+31 silly lockFile c1ef852e-accordion accordion@
+32 error notarget No compatible version found: accordion@'*'
+32 error notarget No valid targets found.
+32 error notarget Perhaps not compatible with your version of node?
+32 error notarget This is most likely not a problem with npm itself.
+32 error notarget In most cases you or one of your dependencies are requesting
+32 error notarget a package version that doesn't exist.
+33 error System Darwin 14.0.0
+34 error command "node" "/usr/local/bin/npm" "install" "accordion"
+35 error cwd /Users/rsb259/projects/Coding Dojo Projects/DFS/crawlers
+36 error node -v v0.10.31
+37 error npm -v 1.4.23
+38 error code ETARGET
+39 verbose exit [ 1, true ]
