@@ -367,6 +367,13 @@ exports.add = function(req, res)
 						for (t in split_titles)
 						{
 							for (s in groups[t])
+							// console.log(groups[t][s])
+							if(groups[t][s][0][0] == '<')
+							{
+								var strang = groups[t][s][0]
+								groups[t][s][0] = strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<'));
+								console.log(strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<')));
+							}
 							{
 								player_splits = {
 								player_name: p_name,
@@ -426,7 +433,7 @@ exports.add = function(req, res)
 		} //maybe put final crawl here (inside that curly)
 	})
 	console.log('dk crawler')
-	c.queue('https://www.draftkings.com/lineup/getavailableplayers?draftGroupId=4782');
+	c.queue('https://www.draftkings.com/lineup/getavailableplayers?draftGroupId=4783');
 // console.log('ERRTHANG', everything);
 }
 
