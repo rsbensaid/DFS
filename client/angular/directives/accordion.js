@@ -1,9 +1,9 @@
-dfs.directive('popOver', function ($compile, $templateCache){
+dfs.directive('accordion', function ($compile, $templateCache){
 	console.log('faaahhhhhh q')
 	var getTemplate = function() {
 		$templateCache.put('templateID.html', 'This is the content of the template');
-		console.log($templateCache.get('popover_template.html'));
-		return $templateCache.get('popover_template.html');
+		console.log($templateCache.get('accordion_template.html'));
+		return $templateCache.get('accordion_template.html');
 	}
 	return {
 		restrict: "A",
@@ -11,20 +11,19 @@ dfs.directive('popOver', function ($compile, $templateCache){
 		template: "<span ng-transclude></span>",
 		link: function (scope, element, attrs) {
 			console.log(scope.splits);
-			var popOverContent;
+			var accordionContent;
 			if(scope.splits) {
 				console.log('hello');
 				var html = getTemplate();
-				popOverContent = $compile(html)(scope);
+				accordionContent = $compile(html)(scope);
 
 				var options = {
-					content: popOverContent,
-					placement: 'right',
+					heading: accordionContent,
 					trigger: 'click',
 					html: true,
-					title: scope.title
+					title: accordionContent
 				};
-				$(element).popover(options);
+				// $(element).accordion(options);
 			}
 		}
 		// scope: {

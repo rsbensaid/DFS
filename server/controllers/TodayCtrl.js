@@ -367,14 +367,14 @@ exports.add = function(req, res)
 						for (t in split_titles)
 						{
 							for (s in groups[t])
+							{
 							// console.log(groups[t][s])
-							if(groups[t][s][0][0] == '<')
-							{
-								var strang = groups[t][s][0]
-								groups[t][s][0] = strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<'));
-								console.log(strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<')));
-							}
-							{
+								if(groups[t][s][0][0] == '<')
+								{
+									var strang = groups[t][s][0]
+									groups[t][s][0] = strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<'));
+									console.log(strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<')));
+								}
 								player_splits = {
 								player_name: p_name,
 								split_title: split_titles[t],

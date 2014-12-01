@@ -19,24 +19,24 @@
 	<input type = 'text' placeholder = 'Search Players' ng-model='search_table'>
 	<input type = 'text' placeholder = 'Price max...' ng-model='price_max'>
 	<input type = 'text' placeholder = 'Position...' ng-model='pos_search'>
-	<table>
-		<tr>
-			<th ng-click='changeSorting("name")'>Player</th>
-			<th ng-click='changeSorting("pos")'>Position</th>
-			<th ng-click='changeSorting("price")'>Price</th>
-			<th ng-click='changeSorting("h_a")'>Home/Away</th>
-			<th ng-click='changeSorting("team")'>Team</th>
-			<th ng-click='changeSorting("team_pace")'>Pace</th>
-			<th ng-click='changeSorting("combo_pace")'>Combo Pace</th>
-			<th ng-click='changeSorting("opp_pace")'>Opponent Pace</th>
-			<th ng-click='changeSorting("opp")'>Opponent</th>
-			<th ng-click='changeSorting("opp_rk")'>Opp. Rank v Pos</th>
-			<th ng-click='changeSorting("fppg")'>DK PPG</th>
-			<th ng-click='changeSorting("mpg")'>Minutes per Game</th>
-			<th ng-click='changeSorting("games")'>Games Played</th>
-		</tr>
-		<tr ng-repeat='player in players | filter: {name: search_table} | filter: isLessThan | filter: {pos: pos_search} | orderBy:sort.column:sort.descending'>
-				<td ng-mouseenter = 'show_player(player.name)' pop-over>{{player.name}}
+		<table>
+			<tr>
+				<th ng-click='changeSorting("name")'>Player</th>
+				<th ng-click='changeSorting("pos")'>Position</th>
+				<th ng-click='changeSorting("price")'>Price</th>
+				<th ng-click='changeSorting("h_a")'>Home/Away</th>
+				<th ng-click='changeSorting("team")'>Team</th>
+				<th ng-click='changeSorting("team_pace")'>Pace</th>
+				<th ng-click='changeSorting("combo_pace")'>Combo Pace</th>
+				<th ng-click='changeSorting("opp_pace")'>Opponent Pace</th>
+				<th ng-click='changeSorting("opp")'>Opponent</th>
+				<th ng-click='changeSorting("opp_rk")'>Opp. Rank v Pos</th>
+				<th ng-click='changeSorting("fppg")'>DK PPG</th>
+				<th ng-click='changeSorting("mpg")'>Minutes per Game</th>
+				<th ng-click='changeSorting("games")'>Games Played</th>
+			</tr>
+			<tr ng-repeat='player in players | filter: {name: search_table} | filter: isLessThan | filter: {pos: pos_search} | orderBy:sort.column:sort.descending'>
+				<td ng-mouseenter = 'show_player(player.name)' ng-click"isCollapsed = !isCollapsed">{{player.name}}
 				</td>
 				<td>{{player.pos}}</td>
 				<td>${{player.price}}</td>
@@ -50,22 +50,17 @@
 				<td>{{player.fppg}}</td>
 				<td>{{player.mpg}}</td>
 				<td>{{player.games}}</td>
+				<td collapse='isCollapsed' ng-repeat='split in splits'>
+					<p>{{split.group}}</p>
+					<p>{{split.split}}</p>
+					<p>{{split.fppg}}</p>
+					<p>{{split.mpg}}</p>
+				</td>
 			</tr>
-	</table>
-	<script type="text/ng-template" id = 'popover_template.html'>
+		</table>
+	<script type="text/ng-template" id = 'accordion_template.html'>
 	<table class='splittable'>
-		<tr>
-			<th>Group</td>
-			<th>Split</td>
-			<th>FPPG</td>
-			<th>MPG</td>
-		</tr>
-		<tr ng-repeat='split in splits'>
-			<td>{{split.group}}</td>
-			<td>{{split.split}}</td>
-			<td>{{split.fppg}}</td>
-			<td>{{split.mpg}}</td>
-		</tr>
+		
 	</table>
 	</script>
 </div>
