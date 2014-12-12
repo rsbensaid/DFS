@@ -1,22 +1,15 @@
-// var model1 = require('./../models/br1-model');
-// var model2 = require('./../models/br2-model');
-// var model3 = require('./../models/today-model');
 var mongoose = require('mongoose');
-// var dk1 = mongoose.model('DK1');
-// var br1 = mongoose.model('BR1');
-// var br2 = mongoose.model('BR2');
+var pg = require('pg');
+var conString = 'postgres://postgres:spencer13@localhost/dknba';
 var splitsdb = mongoose.model('split')
 var everythingdb = mongoose.model('EVERYTHING');
 var Crawler = require('crawler');
 var url = require('url');
 
 exports.showSplits = function(req, res){
-	// console.log('body', typeof(req.params))
-	// console.log('strang', JSON.stringify(req.params.player))
 	var rebuilt = JSON.stringify(req.params.player)
 	var db_search = (rebuilt.split('+').join(' '));
 	var trimmed = db_search.slice(1,(db_search.length)-1)
-	// console.log('put this in db search', db_search);
 	
 	splitsdb.find({player_name: trimmed}, function (err, results){
 		console.log('results', results)
@@ -29,7 +22,23 @@ exports.showSplits = function(req, res){
 	})
 }
 
-
+exports.showGamelog = function(req, res){
+	var rebuilt = JSON.stringify(req.params.player);
+	console.log('rebuilt', rebuilt)
+	var db_search = (rebuilt.split('+').join(' '));
+	console.log('db_search', db_search)
+	var trimmed = db_search.slice(1,(db_search.length)-1);
+	console.log('trimmed', trimmed)
+	var query = "SELECT * FROM games WHERE player_name = '"+trimmed+"'"
+	console.log('query', query)
+	var client = new pg.Client(conString);
+	client.connect(function (err){
+		client.query(query, function (err, result){
+			// console.log("RESULT", result)
+			res.send(result.rows);
+		})
+	})
+}
 
 exports.show = function(req, res){
 	var send_me = []
@@ -363,18 +372,19 @@ exports.add = function(req, res)
 							groups[x][0].splice(0,1)
 						}
 						// console.log(split_titles)
-						// console.log(groups)
+						// console.log('groups', groups)
 						for (t in split_titles)
 						{
+							// console.log('title', split_titles[t])
 							for (s in groups[t])
+							{							
 							// console.log(groups[t][s])
-							if(groups[t][s][0][0] == '<')
-							{
-								var strang = groups[t][s][0]
-								groups[t][s][0] = strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<'));
-								console.log(strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<')));
-							}
-							{
+								if(groups[t][s][0][0] == '<')
+								{
+									var strang = groups[t][s][0]
+									groups[t][s][0] = strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<'));
+									// console.log(strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<')));
+								}
 								player_splits = {
 								player_name: p_name,
 								split_title: split_titles[t],
@@ -391,7 +401,7 @@ exports.add = function(req, res)
 								}
 								var new_split = new splitsdb(player_splits);
 								new_split.save(function (err)
-								{
+								{	
 									if(err)
 									{
 										console.log(err)
@@ -433,7 +443,7 @@ exports.add = function(req, res)
 		} //maybe put final crawl here (inside that curly)
 	})
 	console.log('dk crawler')
-	c.queue('https://www.draftkings.com/lineup/getavailableplayers?draftGroupId=4783');
+	c.queue('https://www.draftkings.com/lineup/getavailableplayers?draftGroupId=5024');
 // console.log('ERRTHANG', everything);
 }
 

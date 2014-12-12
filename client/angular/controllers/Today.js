@@ -8,6 +8,7 @@ dfs.controller('Today', function($scope, Factory){
 	})
 
 	$scope.splits = 'hi'; 
+	$scope.games = 'shalom'; 
 
 	$scope.changeSorting = function(column)
 		{
@@ -41,9 +42,21 @@ dfs.controller('Today', function($scope, Factory){
 	{
 		console.log('we tryin', player_name);
 		Factory.getSplits(player_name, function (output){
-		$scope.splits = output;
-		console.log('show_player output', $scope.splits)
-	})
+			$scope.splits = output;
+			console.log('show_player output', $scope.splits)
+		})
 
 	}
+
+	$scope.show_games = function(player_name)
+	{
+		console.log('going to get games log', player_name);
+		Factory.getGamelogs(player_name, function (output){
+			console.log('back in the controller', output)
+			$scope.games = output;
+		})
+	}
+
+	$scope.date = new Date();
+	// console.log('GOT EM', new Date())
 });

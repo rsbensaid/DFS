@@ -2,7 +2,7 @@ dfs.directive('popOver', function ($compile, $templateCache){
 	console.log('faaahhhhhh q')
 	var getTemplate = function() {
 		$templateCache.put('templateID.html', 'This is the content of the template');
-		console.log($templateCache.get('popover_template.html'));
+		// console.log($templateCache.get('popover_template.html'));
 		return $templateCache.get('popover_template.html');
 	}
 	return {
@@ -10,7 +10,7 @@ dfs.directive('popOver', function ($compile, $templateCache){
 		transclude: true,
 		template: "<span ng-transclude></span>",
 		link: function (scope, element, attrs) {
-			console.log(scope.splits);
+			// console.log(scope.splits);
 			var popOverContent;
 			if(scope.splits) {
 				console.log('hello');
