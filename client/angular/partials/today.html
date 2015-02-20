@@ -60,13 +60,13 @@
 			<th>Date</td>
 			<th>Opp</td>
 			<th>FPPG</td>
-			<th>PPG</td>
+			<th>MPG</td>
 		</tr>
 		<tr ng-repeat="game in games | orderBy:'game_date':true">
 			<td>{{game.game_date | date: "MMM dd, yyyy"}}</td>
 			<td>{{game.opp}}</td>
 			<td>{{game.fppg}}</td>
-			<td>{{game.pts}}</td>
+			<td>{{game.mins}}</td>
 		</tr>
 	</table>
 	</script>

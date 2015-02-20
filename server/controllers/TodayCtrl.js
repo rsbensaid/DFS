@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var pg = require('pg');
-var conString = 'postgres://postgres:spencer13@localhost/dknba';
+var conString = 'postgres://postgres:spencer13@localhost/dknba2';
 var splitsdb = mongoose.model('split')
 var everythingdb = mongoose.model('EVERYTHING');
 var Crawler = require('crawler');
@@ -435,7 +435,7 @@ exports.add = function(req, res)
 				// console.log('running')
 				var insert = "http://www.basketball-reference.com/players/"+br_urls[u][0]+"/"+br_urls[u][1]+br_urls[u][2]+"01/splits/2015/"
 				// console.log(insert);
-				console.log('player splits');
+				console.log('player splits', insert);
 				c3.queue("http://www.basketball-reference.com/players/"+br_urls[u][0]+"/"+br_urls[u][1]+br_urls[u][2]+"01/splits/2015/");
 			}
 			// c3.queue("http://www.basketball-reference.com/players/a/anticpe01/splits/2015/");
@@ -443,7 +443,184 @@ exports.add = function(req, res)
 		} //maybe put final crawl here (inside that curly)
 	})
 	console.log('dk crawler')
-	c.queue('https://www.draftkings.com/lineup/getavailableplayers?draftGroupId=5024');
+	c.queue('https://www.draftkings.com/lineup/getavailableplayers?draftGroupId=5501');
+	console.log('SHOULD BE DONE')
 // console.log('ERRTHANG', everything);
+}
+
+exports.addPlayers = function(req, res)
+{
+	var c1 = new Crawler
+	({
+		maxConnections: 10,
+		callback: function (error, result, $) 
+		{
+			console.log('level2');
+			var players = []
+			var players2 = []
+			var games = []
+
+			$('.full_table td a').each(function (index, player)
+			{		
+				players.push($(player).html());
+			
+			})
+			// console.log('players', players)
+			for (x in players)
+				{
+					if (players[x].length !== 3)
+					{
+						players2.push(players[x]);
+					} 
+				}
+			// console.log('players2', players2)
+			
+				var client = new pg.Client(conString);
+				client.connect(function(err){
+					for (player in players2)
+					{
+						var insert_query = "INSERT INTO players (name) VALUES ('"+players2[player]+"')";
+
+						if(err) { return console.error('blarg', err)}
+
+						client.query(insert_query, function (err, result){
+							if(err){return console.error('error running query', err)}
+							
+						});
+					}
+					if(player == players2.length){client.end()}
+				})
+		}
+	})
+	// console.log('minutes stats')
+	c1.queue('http://www.basketball-reference.com/leagues/NBA_2015_totals.html');	
+}
+
+exports.addGameLogs = function (req, res)
+{
+	var c2 = new Crawler
+	({
+		maxConnections: 10,
+		callback: function (error, result, $) 
+		{
+			var games = []
+			console.log('runs');
+			// console.log('level4');
+			var player_name = [];
+			$('#page_content .bold_text').each(function (index, name)
+			{
+				player_name.push($(name).html());
+			})
+
+			$('#pgl_basic tr').each(function (index, game)
+			{
+				var stats = []
+
+				$($(game).html()).each(function (index, stat)
+				{
+					stats.push($(stat).html())
+				})
+				// console.log('THESE ARE MY STATS', stats);
+				var game = {}
+				game.player_name = player_name[0];
+				game.date = $(stats[5]).html();
+				game.opp = $(stats[13]).html(); 
+				game.pts = stats[55] ? stats[55] : null;
+				game.tovs = stats[51] ? stats[51] : null;;
+				game.blks = stats[49] ? stats[49] : null;;
+				game.stls = stats[47] ? stats[47] : null;;
+				game.asts = stats[45] ? stats[45] : null;;
+				game.rebs = stats[43] ? stats[43] : null;;
+				game.threes = stats[27] ? stats[27] : null;;
+				game.mins = stats[19] ? stats[19] : null;;
+				game.bonus_stats = [game.pts, game.blks, game.stls, game.asts, game.rebs]
+				var count = 0;
+				for(x in game.bonus_stats)
+				{
+					game.dbldbl = null;
+					game.trpldbl = null;
+					if(game.bonus_stats[x] > 9)
+					{
+						count++
+						console.log('count', count)
+					}
+					if (count > 1){dbldbl = 1}
+					else{var dbldbl = 0} 
+					if (count > 2){trpldbl = 1}
+					else{var trpldbl = 0}
+				}
+				game.dbldbl = dbldbl;
+				game.trpldbl = trpldbl;
+				// game.dkpts = ((game.pts) + (game.threes * .5) + (game.rebs * 1.25) + (game.asts * 1.5) + (game.stls * 2) + (game.blks * 2) - (game.tovs * .5) + (game.dbldbl * 1.5) + (game.trpldbl * 3))
+				if(game.date !== null)
+				{
+				games.push(game);
+				}
+				// console.log('stats', games)
+				// console.log('here', $(game).html())
+			})
+			// console.log('GAMES', games)
+			// console.log('GAME1', games[0].date)
+			var client = new pg.Client(conString);
+			// console.log('LOOKIE HERE', conString)
+			
+			client.connect(function(err) {	
+				// console.log(player_name[0])
+				var get_player_id_query = "SELECT * FROM players WHERE name = '"+player_name[0]+"'"
+				if(err) {
+					return console.error('blah', err);
+				}
+				// console.log('game.date', games[game].date);
+				client.query(get_player_id_query, function (err, result){
+					console.log('err', err)
+					// console.log('HERE IS THE RESULT', result);
+					for (game in games)
+					{	
+						console.log('gamelog', games[game])
+						// console.log('TYPE', typeof(games[game].mins))
+						client.query(
+							"INSERT INTO games (player_id, game_date, player_name, opp, pts, tovs, blks, stls, asts, rebs, threes, dbldbl, trpldbl, mins) VALUES ('"+result.rows[0].player_id+"','" + games[game].date+"','"+games[game].player_name+"','"+games[game].opp+"',"+ games[game].pts+","+ games[game].tovs+","+ games[game].blks+","+ games[game].stls+","+ games[game].asts+","+ games[game].rebs+","+games[game].threes+" ,"+ games[game].dbldbl+","+games[game].trpldbl+" ,'"+games[game].mins+"')", 
+							function (err, result){
+								if(err){return console.error('error running query', err)}
+								if(game == games.length){client.end()};
+							}
+						)
+					}
+				})
+				// client.end();
+			})
+		}
+	})
+	// for (x in all_players)
+	var all_players = [];
+	var client = new pg.Client(conString);
+	client.connect(function (err){
+		client.query("SELECT * FROM players", function (err, result)
+			{
+				// console.log(all_players.push(result.rows))
+				var player_names = []
+				var crawler_url = []
+				for (x in result.rows)
+				{
+					player_names.push(result.rows[x].name)
+				}
+				client.end();
+				for (var x = 400; x < player_names.length; x++)
+				{
+					var crawler_url = [];
+					var space = player_names[x].indexOf(' ');
+					var f_init_l_name = player_names[x][space + 1].toLowerCase();
+					var first_five_l_name = player_names[x].substring(space+1, space+6).toLowerCase();
+					var first_two_f_name = player_names[x].substring(0,2).toLowerCase();
+					crawler_url.push(f_init_l_name);
+					crawler_url.push(first_five_l_name);
+					crawler_url.push(first_two_f_name);
+					// console.log('crawler_url', crawler_url)
+					c2.queue("http://www.basketball-reference.com/players/"+crawler_url[0]+"/"+crawler_url[1]+crawler_url[2]+"01/gamelog/2015/");
+					if(x == player_names.length){return}
+				}
+			}
+		)
+	})
 }
 
