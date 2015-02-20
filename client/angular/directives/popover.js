@@ -1,11 +1,9 @@
-dfs.directive('accordion', function ($compile, $templateCache){
+dfs.directive('popOver', function ($compile, $templateCache){
 	console.log('faaahhhhhh q')
 	var getTemplate = function() {
 		$templateCache.put('templateID.html', 'This is the content of the template');
 		// console.log($templateCache.get('popover_template.html'));
 		return $templateCache.get('popover_template.html');
-		console.log($templateCache.get('accordion_template.html'));
-		return $templateCache.get('accordion_template.html');
 	}
 	return {
 		restrict: "A",
@@ -14,20 +12,19 @@ dfs.directive('accordion', function ($compile, $templateCache){
 		link: function (scope, element, attrs) {
 			// console.log(scope.splits);
 			var popOverContent;
-			console.log(scope.splits);
-			var accordionContent;
 			if(scope.splits) {
 				console.log('hello');
 				var html = getTemplate();
-				accordionContent = $compile(html)(scope);
+				popOverContent = $compile(html)(scope);
 
 				var options = {
-					heading: accordionContent,
+					content: popOverContent,
+					placement: 'right',
 					trigger: 'click',
 					html: true,
-					title: accordionContent
+					title: scope.title
 				};
-				// $(element).accordion(options);
+				$(element).popover(options);
 			}
 		}
 		// scope: {
