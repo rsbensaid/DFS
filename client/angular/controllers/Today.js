@@ -38,6 +38,8 @@ dfs.controller('Today', function($scope, Factory){
 		}
 
 
+	$scope.isCollapsed = false;
+
 	$scope.show_player = function(player_name)
 	{
 		console.log('we tryin', player_name);

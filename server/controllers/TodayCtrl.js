@@ -377,13 +377,21 @@ exports.add = function(req, res)
 						{
 							// console.log('title', split_titles[t])
 							for (s in groups[t])
+<<<<<<< HEAD
 							{							
+=======
+							{
+>>>>>>> 24a56afc65c59005e756f8b425d4300c644280a4
 							// console.log(groups[t][s])
 								if(groups[t][s][0][0] == '<')
 								{
 									var strang = groups[t][s][0]
 									groups[t][s][0] = strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<'));
+<<<<<<< HEAD
 									// console.log(strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<')));
+=======
+									console.log(strang.substring(strang.indexOf('>')+1,strang.lastIndexOf('<')));
+>>>>>>> 24a56afc65c59005e756f8b425d4300c644280a4
 								}
 								player_splits = {
 								player_name: p_name,
