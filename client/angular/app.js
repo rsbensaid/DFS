@@ -1,1 +1,1 @@
-var dfs = angular.module('dfs', ['ngRoute', 'ui.bootstrap']);
+var crm = angular.module('crm', ['ngRoute']);

@@ -1,50 +1,9 @@
-body{
-	margin-left: 10px;
-	background-color: #333333;
-}
-table, th, td{
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-td{
-	text-align: center;
-}
-.splittable{
-	background-color: black;
-	color: white;
-	border-collapse: collapse;
-}
-
-.splittable th, .splittable td{
-	border: 1px solid white;
-}
-
-.table-striped tr th{
-	text-align: center;
-	background-color: black;
-	color: #0099FF;
-}
-
-.table-striped tr:nth-child(even) td{
-	background-color: black;
-	color: #00FF00;
-}
-
-.table-striped tr:nth-child(odd) td{
-	background-color: black;
-	color: orange;
-}
-
-#search_bars input{
-	border-radius: 5px;
-	margin-left: 55px;
-	margin-right: 55px;
-	margin-bottom: 20px;
-	margin-top: 20px;
-}
-
-h1{
-	text-align: center;
-	color: #0099FF;
+#messages{
+	width: 500px;
+	height:300px;
+	overflow: scroll;
+	border: 2px solid black;
+	padding-top: 5px;
+	margin-bottom: 10px;
+	/*background-color: red; */
 }

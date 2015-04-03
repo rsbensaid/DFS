@@ -1,0 +1,18 @@
+<div ng-controller = 'Chat'>
+	<form>
+		Username: <input type = 'text' ng-model = 'new_user.name'>
+		Password: <input type = 'text' ng-model = 'new_user.pw'>
+		Confirm Password: <input type = 'text' ng-model = 'new_user.cpw'>
+		<!-- Make below only accept certain file types and get it working -->
+		Avatar: <input type="file" ng-model = 'new_user.avatar'>
+		Color: <select ng-model = 'new_user.color'>
+			<option>Red</option>
+			<option>Blue</option>
+			<option>Green</option>
+			<option>Orange</option>
+			<option>Yellow</option>
+			<option>Purple</option>
+		</select>
+		<button ng-click = 'addUser(new_user)'><a href="#/chat/{{new_user.name}}">Submit</a></button>
+	</form>
+</div>

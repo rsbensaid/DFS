@@ -1,47 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" ng-app='dfs'>
+<html lang="en" ng-app='crm'>
 <head>
-	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-
-	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"/></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"/></script>
-	<script src = './angular/app.js'></script>
-	<script src= "./angular/controllers/Today.js"></script>
-	<script src = './angular/factories/factory.js'></script>
-	<script src = './angular/directives/popover.js'></script>
-	<script src = './angular/directives/gamelog.js'></script>
-	<!-- <script src = './angular/directives/accordion.js'></script> -->
-	<script src = './bootstrap/ui-bootstrap-tpls-0.9.0.min.js'></script>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="./style.css">
-	<title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"/></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"/></script>
+  <script type="text/javascript" src='/socket.io/socket.io.js'></script>
+  <script src = './angular/app.js'></script>
+  <script src= "./angular/controllers/Chat.js"></script>
+  <script src = './angular/factories/factory.js'></script>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <title>Document</title>
 </head>
 <body>
-	<div class = 'container'>
-		<h1>Draft Kings Cheat Sheet: NBA</h1>
-		<!-- <a href="#/today">Show Today's Cheatsheet</a> -->
-		<script>
-			// alert('BLAH;');
-			dfs.config(function($routeProvider){
-				$routeProvider
-				.when('/', {templateUrl: '/angular/partials/today.html'})
-				.when('/get_today', {templateUrl: '/angular/partials/nada.html'})
-			})
-			</script>
-		<div ng-view=''>
-		</div>
-	</div>
+  <div class = 'container'>
+    <h1>Welcome to The Chatroom</h1>
+    <script>
+      // alert('BLAH;');
+      crm.config(function($routeProvider){
+        $routeProvider
+        .when('/', {templateUrl: '/angular/partials/home.html'})
+        .when('/login', {templateUrl: '/angular/partials/login.html'})
+        .when('/signup', {templateUrl: '/angular/partials/signup.html'})
+        .when('/signup10k', {templateUrl: '/angular/partials/signup10k.html'})
+        .when('/randos', {templateUrl: '/angular/partials/home.html'})
+        .when('/chat/:name', {templateUrl: '/angular/partials/chat.html'})
+        .when('/profile/:name', {templateUrl: '/angular/partials/profile.html'})
+      })
+      </script>
+
+    <div ng-view=''>
+    </div>
+  </div>
 </body>
 </html>

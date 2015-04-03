@@ -1,0 +1,7 @@
+<div ng-controller = 'Chat'>
+	<form>
+		Username: <input type = 'text' ng-model = 'user.name'>
+		Password: <input type = 'text' ng-model = 'user.pw'>
+		<button ng-click = 'logUser(user)'><a href="#/chat/{{user.name}}">Submit</a></button>
+	</form>
+</div>

@@ -1,0 +1,10 @@
+<div ng-controller = 'Chat'>
+	<button ng-click='getChat()'>Get Chat History</button>
+	<div id = 'messages'>
+		<h4 ng-repeat='chat in chats track by $index'>{{chat.username}}: {{chat.text}}</h4>
+	</div>
+	<form id = 'message_form'>
+		Enter your message here: <input type ='text' ng-model = 'new_message.text'>
+		<input type = 'submit' value = 'Submit' ng-click='addMsg(new_message)'>
+	</form>
+</div>
